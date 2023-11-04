@@ -1,4 +1,6 @@
---Rut Trap (CT)
+--Rut Trap
+--Original Code made by Bigmen
+--Modified by Avvento
 local s,id=GetID()
 function s.initial_effect(c)
     local e1=Effect.CreateEffect(c)
