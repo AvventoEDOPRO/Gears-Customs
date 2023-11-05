@@ -35,24 +35,40 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
     local tc=Duel.SelectTarget(tp, s.filter3, tp, LOCATION_MZONE, 0, 1,1,false,nil):GetFirst()
     if tc then
         local c=e:GetHandler()
-        local e2=Effect.CreateEffect(c)
-        e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-        e2:SetType(EFFECT_TYPE_FIELD)
-        e2:SetCode(EFFECT_MUST_ATTACK)
-        e2:SetRange(LOCATION_MZONE)
-        e2:SetTargetRange(0,LOCATION_MZONE)
-        e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-        e2:SetCondition(s.poscon)
-        tc:RegisterEffect(e2)
-        local e3=e2:Clone()
-        e3:SetCode(EFFECT_MUST_ATTACK_MONSTER)
-        e3:SetValue(s.atklimit)
+        local e3=Effect.CreateEffect(c)
+        e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+        e3:SetType(EFFECT_TYPE_FIELD)
+        e3:SetCode(EFFECT_MUST_ATTACK)
+        e3:SetRange(LOCATION_MZONE)
+        e3:SetTargetRange(0,LOCATION_MZONE)
+        e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+        e3:SetCondition(s.poscon)
         tc:RegisterEffect(e3)
+        local e4=e3:Clone()
+        e4:SetCode(EFFECT_MUST_ATTACK_MONSTER)
+        e4:SetValue(s.atklimit)
+        tc:RegisterEffect(e4)
+
+        local e1=Effect.CreateEffect(c)
+        e1:SetType(EFFECT_TYPE_SINGLE)
+        e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+        e1:SetCode(EFFECT_UPDATE_DEFENSE)
+        e1:SetRange(LOCATION_MZONE)
+        e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+        e1:SetValue(s.val)
+        tc:RegisterEffect(e1)
 
     end
 end
-function s.filter2(c)
+function s.filter3(c)
     return c:IsRace(RACE_BEAST) and c:IsFaceup()
+end
+
+function s.poscon(e)
+	return Duel.GetTurnPlayer()==1-e:GetHandlerPlayer()
+end
+function s.atklimit(e,c)
+	return c==e:GetHandler()
 end
 
 function s.poscon(e)
