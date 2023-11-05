@@ -51,7 +51,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 
     end
 end
-function s.filter3(c)
+function s.filter2(c)
     return c:IsRace(RACE_BEAST) and c:IsFaceup()
 end
 
